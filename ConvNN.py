@@ -9,13 +9,10 @@ class conv3:
   def forward(self,input):
     l,b=input.shape
     self.chache_input=input
-    #paddedinput=zeros(input.shape[0]+2,input.shape[1]+2)
-    #paddedinput[1:input.shape[0]+1,1:input.shape[1]+1]+=input
     out=np.zeros((l-2,b-2,8))
     for i in range(l-2):
       for j in range(b-2):
         for f in range(self.numfilter):
-          #dl_dfilter[:,:,f]+=dl_dout[i,j,f]*self.chache_input[i:i+3,j:j+3]
           out[i,j,f]=np.sum(input[i:i+3,j:j+3]*self.filmat[:,:,f],axis=(0,1))
     return out
   def backward(self,dl_dout,learning):
